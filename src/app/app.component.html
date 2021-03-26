@@ -9,7 +9,7 @@
         <a routerLink="/login" class="nav-link">Login</a>
       </li>
       <li routerLinkActive="active" class="nav-item">
-        <a routerLink="/cursos" class="nav-link">Cursos</a>
+        <a routerLink="/cursos" [queryParams]="{pagina:1}" class="nav-link">Cursos</a>
       </li>
       <li routerLinkActive="active" class="nav-item">
         <a [routerLink]="['curso', idCurso.value]" class="nav-link">Curso com id</a>
