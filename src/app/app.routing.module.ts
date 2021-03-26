@@ -1,18 +1,23 @@
 
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-//import { CursoDetalheComponent } from "./cursos/curso-detalhe/curso-detalhe.component";
-//import { CursoNaoEncontradoComponent } from "./cursos/curso-nao-encontrado/curso-nao-encontrado.component";
-//import { CursosComponent } from "./cursos/cursos.component";
+import { AlunosGuard } from "./guard/alunos.guard";
+import { AuthGuard } from "./guard/auth.guard";
+import { CursosGuard } from "./guard/cursos.guard";
 import { HomeComponent } from "./home/home.component";
 import { LoginComponent } from "./login/login.component";
 
 const appRoutes: Routes = [
-  //  { path: 'cursos', component: CursosComponent  },
-  //  { path: 'curso/:id', component: CursoDetalheComponent  },
-    { path: 'login', component: LoginComponent  },
-  //  { path: 'naoEncontrado', component: CursoNaoEncontradoComponent},
-    { path: '', component: HomeComponent  }
+  {path: 'cursos', 
+    loadChildren: () => import('./cursos/cursos.module').then(m => m.CursosModule),
+    canActivate: [AuthGuard],
+    canActivateChild: [CursosGuard]},
+  {path: 'alunos', 
+    loadChildren: () => import('./alunos/alunos.module').then(m => m.AlunosModule),
+    canActivate: [AuthGuard],
+    canActivateChild: [AlunosGuard]},
+  { path: 'login', component: LoginComponent  },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard]  }
 ];
 
 @NgModule({
